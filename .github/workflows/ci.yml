@@ -1,17 +1,6 @@
 name: build
 on:
-  push:
-    branches:
-      - master
-    tags:
-      - '!*' # Do not execute on tags
-    paths:
-      - lib/*
-      - __tests__/*
-      - '*.json'
-  pull_request:
-    paths:
-      - '!*.MD'
+  - push
 jobs:
   test:
     strategy:
