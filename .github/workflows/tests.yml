@@ -1,4 +1,4 @@
-name: eslint + jest
+name: eslint_jest
 
 # Trigger the workflow on push or pull request
 on:
