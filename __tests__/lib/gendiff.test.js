@@ -1,7 +1,7 @@
 import {
   test,
   expect,
-} from '@jest/globals'
+} from '@jest/globals';
 import {
   join,
   dirname,
@@ -52,5 +52,5 @@ test('getNormalizeDiff', () => {
   const fileContent2 = getFileContent(fixturesFile2);
   const jsonDiff = getJsonDiff(fileContent1, fileContent2);
   expect(getNormalizeDiff(jsonDiff)).toEqual(simplePatternString);
-  expect(getNormalizeDiff([])).toEqual( `{\n  ${[].join('\n  ')}\n}`);
+  expect(getNormalizeDiff([])).toEqual(`{\n  ${[].join('\n  ')}\n}`);
 });

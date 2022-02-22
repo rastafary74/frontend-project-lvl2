@@ -23,7 +23,8 @@
   "homepage": "https://github.com/rastafary74/frontend-project-lvl2#readme",
   "dependencies": {
     "commander": "^9.0.0",
-    "lodash": "^4.17.21"
+    "lodash": "^4.17.21",
+    "@hexlet/code": "/"
   },
   "devDependencies": {
     "@jest/globals": "^27.5.1",
