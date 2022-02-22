@@ -34,9 +34,6 @@ jobs:
         # Add environment variables
         env:
           CI: true
-      - name: Install @hexlet/code
-        run: |
-          npm link
       - name: Run linter
         # Run Linter
         run: |

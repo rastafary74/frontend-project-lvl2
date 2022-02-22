@@ -24,7 +24,7 @@
   "dependencies": {
     "commander": "^9.0.0",
     "lodash": "^4.17.21",
-    "@hexlet/code": "/"
+    "@hexlet/code": "file:./"
   },
   "devDependencies": {
     "@jest/globals": "^27.5.1",
