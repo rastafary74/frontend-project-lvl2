@@ -36,7 +36,7 @@ jobs:
           CI: true
       - name: Install @hexlet/code
         run: |
-          npm link @hexlet/code
+          npm link
       - name: Run linter
         # Run Linter
         run: |
