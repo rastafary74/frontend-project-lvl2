@@ -67,3 +67,10 @@ test('getDiffObj YAML', () => {
   expect(getDiffObj(fileContent1Yaml, fileContent2Yaml)).toEqual(simplePatternArray);
   expect(getDiffObj('', '')).toEqual([]);
 });
+
+test('throws error', () => {
+  const fixturesEmptyJson = getPathToFile('empty.json');
+  expect(() => {
+    genDiff(fixturesEmptyJson, fixturesEmptyJson);
+  }).toThrowError();
+});
