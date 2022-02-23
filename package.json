@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "test": "NODE_OPTIONS=--experimental-vm-modules npx jest",
-    "deb": "node --inspect-brk bin/gendiff.js __tests__/__fixtures__/file1.json __tests__/__fixtures__/file2.json"
+    "deb": "node --inspect-brk bin/gendiff.js __tests__/__fixtures__/file1.yml __tests__/__fixtures__/file2.yml"
   },
   "repository": {
     "type": "git",
@@ -22,9 +22,10 @@
   },
   "homepage": "https://github.com/rastafary74/frontend-project-lvl2#readme",
   "dependencies": {
+    "@hexlet/code": "file:./",
     "commander": "^9.0.0",
-    "lodash": "^4.17.21",
-    "@hexlet/code": "file:./"
+    "js-yaml": "^4.1.0",
+    "lodash": "^4.17.21"
   },
   "devDependencies": {
     "@jest/globals": "^27.5.1",

@@ -8,3 +8,9 @@
 
 ### Eslint + Jest
 [![Eslint + Jest](https://github.com/rastafary74/frontend-project-lvl2/workflows/eslint_jest/badge.svg)](https://github.com/rastafary74/frontend-project-lvl2/actions)
+
+### Preview: Finding the difference between two json files
+[![asciicast](https://asciinema.org/a/pxvL39NYY4Z0AYKlKEGSkx8er.svg)](https://asciinema.org/a/pxvL39NYY4Z0AYKlKEGSkx8er)
+
+### Preview: Finding the difference between two yaml files
+[![asciicast](https://asciinema.org/a/rPJYRRk5E8yEiZw3GHEsZ2l3b.svg)](https://asciinema.org/a/rPJYRRk5E8yEiZw3GHEsZ2l3b)

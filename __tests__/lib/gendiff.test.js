@@ -2,6 +2,7 @@ import {
   test,
   expect,
 } from '@jest/globals';
+
 import {
   join,
   dirname,
@@ -10,10 +11,14 @@ import { fileURLToPath } from 'url';
 
 import {
   getNormalizeDiff,
-  getFileContent,
-  getJsonDiff,
   genDiff,
+  getDiffObj,
 } from '../../lib/gendiff.js';
+
+import {
+  parseJson,
+  parseYaml,
+} from '../../lib/parsers.js';
 
 const simplePatternString = '{\n'
   + '  - follow: false\n'
@@ -31,26 +36,43 @@ const simplePatternArray = [
   '+ timeout: 20',
   '+ verbose: true',
 ];
-const fileName = fileURLToPath(import.meta.url);
-const dirName = dirname(fileName);
-const fixturesFile1 = join(dirName, '..', '__fixtures__', 'file1.json');
-const fixturesFile2 = join(dirName, '..', '__fixtures__', 'file2.json');
+const getPathToFile = (filePath) => {
+  const fileName = fileURLToPath(import.meta.url);
+  const dirName = dirname(fileName);
+  return join(dirName, '..', '__fixtures__', filePath);
+};
 
-test('genDiff', () => {
-  expect(genDiff(fixturesFile1, fixturesFile2)).toEqual(simplePatternString);
+const fixturesFile1Json = getPathToFile('file1.json');
+const fixturesFile2Json = getPathToFile('file2.json');
+const fixturesFile1Yaml = getPathToFile('file1.yml');
+const fixturesFile2Yaml = getPathToFile('file2.yml');
+
+test('genDiff JSON', () => {
+  expect(genDiff(fixturesFile1Json, fixturesFile2Json)).toEqual(simplePatternString);
 });
 
-test('getJsonDiff', () => {
-  const fileContent1 = getFileContent(fixturesFile1);
-  const fileContent2 = getFileContent(fixturesFile2);
-  expect(getJsonDiff(fileContent1, fileContent2)).toEqual(simplePatternArray);
-  expect(getJsonDiff('', '')).toEqual([]);
+test('genDiff YAML', () => {
+  expect(genDiff(fixturesFile1Yaml, fixturesFile2Yaml)).toEqual(simplePatternString);
+});
+
+test('getDiffObj JSON', () => {
+  const fileContent1Json = parseJson(fixturesFile1Json);
+  const fileContent2Json = parseJson(fixturesFile2Json);
+  expect(getDiffObj(fileContent1Json, fileContent2Json)).toEqual(simplePatternArray);
+  expect(getDiffObj('', '')).toEqual([]);
+});
+
+test('getDiffObj YAML', () => {
+  const fileContent1Yaml = parseYaml(fixturesFile1Yaml);
+  const fileContent2Yaml = parseYaml(fixturesFile2Yaml);
+  expect(getDiffObj(fileContent1Yaml, fileContent2Yaml)).toEqual(simplePatternArray);
+  expect(getDiffObj('', '')).toEqual([]);
 });
 
 test('getNormalizeDiff', () => {
-  const fileContent1 = getFileContent(fixturesFile1);
-  const fileContent2 = getFileContent(fixturesFile2);
-  const jsonDiff = getJsonDiff(fileContent1, fileContent2);
+  const fileContent1Json = parseJson(fixturesFile1Json);
+  const fileContent2Json = parseJson(fixturesFile2Json);
+  const jsonDiff = getDiffObj(fileContent1Json, fileContent2Json);
   expect(getNormalizeDiff(jsonDiff)).toEqual(simplePatternString);
   expect(getNormalizeDiff([])).toEqual(`{\n  ${[].join('\n  ')}\n}`);
 });
