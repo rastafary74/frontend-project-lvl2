@@ -15,15 +15,11 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
       - run: npm install
-  coverage:
-    needs: [ test ]
-    name: coverage
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@master
       - uses: paambaati/codeclimate-action@v3.0.0
         env:
-          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+         CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
         with:
-          coverageCommand: make cover
-          debug: true
+         coverageCommand: make cover
+         debug: true
+
+

@@ -10,7 +10,6 @@ import {
 import { fileURLToPath } from 'url';
 
 import {
-  getNormalizeDiff,
   genDiff,
   getDiffObj,
 } from '../../lib/gendiff.js';
@@ -67,12 +66,4 @@ test('getDiffObj YAML', () => {
   const fileContent2Yaml = parseYaml(fixturesFile2Yaml);
   expect(getDiffObj(fileContent1Yaml, fileContent2Yaml)).toEqual(simplePatternArray);
   expect(getDiffObj('', '')).toEqual([]);
-});
-
-test('getNormalizeDiff', () => {
-  const fileContent1Json = parseJson(fixturesFile1Json);
-  const fileContent2Json = parseJson(fixturesFile2Json);
-  const jsonDiff = getDiffObj(fileContent1Json, fileContent2Json);
-  expect(getNormalizeDiff(jsonDiff)).toEqual(simplePatternString);
-  expect(getNormalizeDiff([])).toEqual(`{\n  ${[].join('\n  ')}\n}`);
 });
