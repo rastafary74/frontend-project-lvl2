@@ -9,3 +9,6 @@ test:
 
 cover:
 		NODE_OPTIONS=--experimental-vm-modules npx jest --coverage
+
+debug:
+		node --inspect-brk bin/gendiff.js __tests__/__fixtures__/file1.yml __tests__/__fixtures__/file2.yml

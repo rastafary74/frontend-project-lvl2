@@ -4,10 +4,6 @@
   "description": "[![Actions Status](https://github.com/rastafary74/frontend-project-lvl2/workflows/hexlet-check/badge.svg)](https://github.com/rastafary74/frontend-project-lvl2/actions)",
   "main": "index.js",
   "type": "module",
-  "scripts": {
-    "test": "NODE_OPTIONS=--experimental-vm-modules npx jest",
-    "deb": "node --inspect-brk bin/gendiff.js __tests__/__fixtures__/file1.yml __tests__/__fixtures__/file2.yml"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/rastafary74/frontend-project-lvl2.git"
