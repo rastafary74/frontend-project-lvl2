@@ -1,9 +1,6 @@
 #!/usr/bin/env node
 import { Command } from 'commander';
-import {
-  genDiff,
-  stylish,
-} from '@hexlet/code';
+import genDiff from '@hexlet/code';
 
 const program = new Command();
 program
@@ -15,13 +12,7 @@ program
   .option('-s, --style <type>', 'output format', 'stylish')
   .usage('[options] <filepath1> <filepath2>')
   .action((filepath1, filepath2, option) => {
-    switch (option.style) {
-      case 'stylish':
-        console.log(stylish(genDiff(filepath1, filepath2)));
-        break;
-      default:
-        throw new Error('Style don\'t support');
-    }
+    console.log(genDiff(filepath1, filepath2, option.style));
   });
 
 program
