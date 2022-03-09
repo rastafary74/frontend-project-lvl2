@@ -12,8 +12,5 @@
 ### Preview: Finding the difference between two json files
 [![asciicast](https://asciinema.org/a/pxvL39NYY4Z0AYKlKEGSkx8er.svg)](https://asciinema.org/a/pxvL39NYY4Z0AYKlKEGSkx8er)
 
-### Preview: Finding the difference between two yaml files
-[![asciicast](https://asciinema.org/a/rPJYRRk5E8yEiZw3GHEsZ2l3b.svg)](https://asciinema.org/a/rPJYRRk5E8yEiZw3GHEsZ2l3b)
-
-### Preview: Finding the difference between two nested structures
-[![asciicast](https://asciinema.org/a/eVkJouO2uLEObEE6rLdm9Fvbm.svg)](https://asciinema.org/a/eVkJouO2uLEObEE6rLdm9Fvbm)
+### Preview: Finding the difference between two nested structures, two style output
+[![asciicast](https://asciinema.org/a/wBza8R2nPWMrUuxw5aTAEtoPN.svg)](https://asciinema.org/a/wBza8R2nPWMrUuxw5aTAEtoPN)

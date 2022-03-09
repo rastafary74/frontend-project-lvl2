@@ -8,6 +8,19 @@ const getValue = (value) => {
   return value;
 };
 
+const getString = (state, property, oldVal, newVal) => {
+  switch (state) {
+    case 'added':
+      return [`Property '${property}' was added with value: ${oldVal}`];
+    case 'removed':
+      return [`Property '${property}' was removed`];
+    case 'updated':
+      return [`Property '${property}' was updated. From ${oldVal} to ${newVal}`];
+    default:
+      return [];
+  }
+};
+
 const getPlain = (array, acc = []) => {
   if (Array.isArray(array) === false) {
     return array;
@@ -21,16 +34,7 @@ const getPlain = (array, acc = []) => {
     if (state === 'complex') {
       return getPlain(oldVal, path);
     }
-    if (state === 'added') {
-      return [`Property '${pathStr}' was added with value: ${printOldVal}`];
-    }
-    if (state === 'removed') {
-      return [`Property '${pathStr}' was removed`];
-    }
-    if (state === 'updated') {
-      return [`Property '${pathStr}' was updated. From ${printOldVal} to ${printNewVal}`];
-    }
-    return [];
+    return getString(state, pathStr, printOldVal, printNewVal);
   };
   return array.map((arr) => iter(arr, acc))
     .filter((item) => item.length !== 0)

@@ -23,6 +23,24 @@ const printValue = (value, replacer, spacesCount) => {
   return `{\n${result}\n${bracketIndentResult}}`;
 };
 
+const getString = (state, key, oldValue, startString, newValue = null) => {
+  const strokeNewValue = `${key}: ${oldValue}`;
+  const strokeOldValue = `${key}: ${newValue}`;
+  switch (state) {
+    case 'added':
+      return `${startString}+ ${strokeNewValue}`;
+    case 'removed':
+      return `${startString}- ${strokeNewValue}`;
+    case 'unchanged':
+      return `${startString}  ${strokeNewValue}`;
+    case 'updated':
+      return `${startString}- ${strokeNewValue}\n`
+           + `${startString}+ ${strokeOldValue}`;
+    default:
+      return `  ${key}: {\n${oldValue}\n`;
+  }
+};
+
 const stylish = (array, replacer = ' ', spacesCount = 4) => {
   if (Array.isArray(array) === false) {
     return String(array);
@@ -35,21 +53,11 @@ const stylish = (array, replacer = ' ', spacesCount = 4) => {
     const [state, key, oldValue, newValue] = node;
     const oldValueStr = printValue(oldValue, replacer, indentSize);
     const newValueStr = printValue(newValue, replacer, indentSize);
-    if (state === 'added') {
-      return `${startString}+ ${key}: ${oldValueStr}`;
-    }
-    if (state === 'removed') {
-      return `${startString}- ${key}: ${oldValueStr}`;
-    }
-    if (state === 'unchanged') {
-      return `${startString}  ${key}: ${oldValueStr}`;
-    }
-    if (state === 'updated') {
-      return `${startString}- ${key}: ${oldValueStr}\n`
-        + `${startString}+ ${key}: ${newValueStr}`;
+    if (state !== 'complex') {
+      return `${getString(state, key, oldValueStr, startString, newValueStr)}`;
     }
     const valueStr = oldValue.map((item) => iter(item, depth + 1)).join('\n');
-    return `${startString}  ${key}: {\n${valueStr}\n${bracketIndent}}`;
+    return `${startString}${getString(state, key, valueStr)}${bracketIndent}}`;
   };
   const result = array.map((item) => iter(item, 1)).join('\n');
   return `{\n${result}\n}`;
