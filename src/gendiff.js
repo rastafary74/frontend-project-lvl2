@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 import {
   extname,
 } from 'path';
@@ -26,7 +28,8 @@ const getDataForFormatter = (object) => {
 const getSummaryKeys = (obj1, obj2) => {
   const keysData = Object.keys(obj1).concat(Object.keys(obj2));
   const sortedArray = (element, index, array) => array.indexOf(element) === index;
-  return keysData.filter(sortedArray).sort();
+  const filteredArray = keysData.filter(sortedArray);
+  return _.sortBy(filteredArray);
 };
 
 export const getDiffTwoObj = (dataOne, dataTwo) => {
@@ -35,23 +38,18 @@ export const getDiffTwoObj = (dataOne, dataTwo) => {
     const dataOneKey = getDataForFormatter(dataOne[key]);
     const dataTwoKey = getDataForFormatter(dataTwo[key]);
     if (dataOne[key] === Object(dataOne[key]) && dataTwo[key] === Object(dataTwo[key])) {
-      acc.push(['complex', key, getDiffTwoObj(dataOne[key], dataTwo[key])]);
-      return acc;
+      return acc.concat([['complex', key, getDiffTwoObj(dataOne[key], dataTwo[key])]]);
     }
     if (key in dataOne && !(key in dataTwo)) {
-      acc.push(['removed', key, dataOneKey]);
-      return acc;
+      return acc.concat([['removed', key, dataOneKey]]);
     }
     if (!(key in dataOne) && key in dataTwo) {
-      acc.push(['added', key, dataTwoKey]);
-      return acc;
+      return acc.concat([['added', key, dataTwoKey]]);
     }
     if (dataOne[key] !== dataTwo[key]) {
-      acc.push(['updated', key, dataOneKey, dataTwoKey]);
-      return acc;
+      return acc.concat([['updated', key, dataOneKey, dataTwoKey]]);
     }
-    acc.push(['unchanged', key, dataOneKey]);
-    return acc;
+    return acc.concat([['unchanged', key, dataOneKey]]);
   };
   return uniqKeysJsonData.reduce(calculateDiff, []);
 };

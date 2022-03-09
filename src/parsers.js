@@ -10,17 +10,13 @@ import {
 import yaml from 'js-yaml';
 
 export const getFileContent = (path) => {
-  let filePath = normalize(path);
-  let data;
-  if (filePath.startsWith('/') === false) {
-    filePath = resolve(filePath);
-  }
+  const normalizePath = normalize(path);
+  const filePath = normalizePath.startsWith('/') ? normalizePath : resolve(normalizePath);
   try {
-    data = readFileSync(filePath);
+    return readFileSync(filePath);
   } catch (err) {
     throw new Error('File not found');
   }
-  return data;
 };
 
 export const parseJson = (filePath) => {
