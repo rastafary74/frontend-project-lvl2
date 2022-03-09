@@ -38,11 +38,11 @@ export const getDiffTwoObj = (dataOne, dataTwo) => {
       acc.push(['complex', key, getDiffTwoObj(dataOne[key], dataTwo[key])]);
       return acc;
     }
-    if (Object.hasOwn(dataOne, key) && !Object.hasOwn(dataTwo, key)) {
+    if (key in dataOne && !(key in dataTwo)) {
       acc.push(['removed', key, dataOneKey]);
       return acc;
     }
-    if (!Object.hasOwn(dataOne, key) && Object.hasOwn(dataTwo, key)) {
+    if (!(key in dataOne) && key in dataTwo) {
       acc.push(['added', key, dataTwoKey]);
       return acc;
     }
