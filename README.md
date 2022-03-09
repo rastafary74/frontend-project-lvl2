@@ -18,7 +18,7 @@ A console utility for finding the difference between two files. Support format J
 git clone https://github.com/rastafary74/frontend-project-lvl2.git
 ```
 
-### Installation
+### Installation 
 ```sh
 npm ci
 ```
