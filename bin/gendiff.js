@@ -9,13 +9,10 @@ program
   .version('0.0.1')
   .argument('<filepath1>', 'path to file 1')
   .argument('<filepath2>', 'path to file 2')
-  .option('-s, --style <type>', 'output format', 'stylish')
+  .option('-f, --format <format>', 'output format', 'stylish')
   .usage('[options] <filepath1> <filepath2>')
   .action((filepath1, filepath2, option) => {
-    console.log(genDiff(filepath1, filepath2, option.style));
+    console.log(genDiff(filepath1, filepath2, option.format));
   });
-
-program
-  .option('-f, --format <type>', 'output format');
 
 program.parse();
