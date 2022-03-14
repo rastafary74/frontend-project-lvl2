@@ -27,7 +27,7 @@ export const getFileContent = (fullPath) => {
   }
 };
 
-export const genDiff = (filePath1, filePath2, style) => {
+export const genDiff = (filePath1, filePath2, style = 'stylish') => {
   const fullFile1Path = getFullPath(filePath1);
   const fullFile2Path = getFullPath(filePath2);
   const file1Ext = getExtFileFromPath(filePath1);
