@@ -9,16 +9,13 @@ import {
 } from 'path';
 import { fileURLToPath } from 'url';
 
-import {
-  parseJson,
-  parseYaml,
-  getFileContent,
-} from '../../src/parsers.js';
+import parse from '../../../src/parsers/parsers.js';
+import { getFileContent } from '../../../src/index.js';
 
 const getPathToFile = (filePath) => {
   const fileName = fileURLToPath(import.meta.url);
   const dirName = dirname(fileName);
-  return join(dirName, '..', '__fixtures__', filePath);
+  return join(dirName, '../../', '__fixtures__', filePath);
 };
 
 const fixturesFile1Json = getPathToFile('file1.json');
@@ -86,15 +83,14 @@ const contentFile2 = {
 };
 
 test('genDiff JSON or YAML', () => {
-  expect(parseJson(fixturesFile1Json)).toEqual(contentFile1);
-  expect(parseJson(fixturesFile2Json)).toEqual(contentFile2);
-  expect(parseYaml(fixturesFile1Yaml)).toEqual(contentFile1);
-  expect(parseYaml(fixturesFile2Yaml)).toEqual(contentFile2);
+  expect(parse('json', getFileContent(fixturesFile1Json))).toEqual(contentFile1);
+  expect(parse('json', getFileContent(fixturesFile2Json))).toEqual(contentFile2);
+  expect(parse('yml', getFileContent(fixturesFile1Yaml))).toEqual(contentFile1);
+  expect(parse('yaml', getFileContent(fixturesFile2Yaml))).toEqual(contentFile2);
 });
 
 test('throws error', () => {
-  const fixturesFakeFile = getPathToFile('fake.yml');
   expect(() => {
-    getFileContent(fixturesFakeFile);
+    parse('fake', '');
   }).toThrow();
 });

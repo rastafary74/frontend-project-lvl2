@@ -1,16 +1,5 @@
 import _ from 'lodash';
 
-import {
-  extname,
-} from 'path';
-
-import {
-  parseYaml,
-  parseJson,
-} from './parsers.js';
-
-import getStylish from '../formatters/index.js';
-
 const getDataForFormatter = (object) => {
   if (object !== Object(object)) {
     return object;
@@ -32,7 +21,7 @@ const getSummaryKeys = (obj1, obj2) => {
   return _.sortBy(filteredArray);
 };
 
-export const getDiffTwoObj = (dataOne, dataTwo) => {
+const getDiffTwoObj = (dataOne, dataTwo) => {
   const uniqKeysJsonData = getSummaryKeys(dataOne, dataTwo);
   const calculateDiff = (acc, key) => {
     const dataOneKey = getDataForFormatter(dataOne[key]);
@@ -54,23 +43,4 @@ export const getDiffTwoObj = (dataOne, dataTwo) => {
   return uniqKeysJsonData.reduce(calculateDiff, []);
 };
 
-export const getDataFromFormat = (filePath, format) => {
-  switch (format) {
-    case '.json':
-      return parseJson(filePath);
-    case '.yml':
-    case '.yaml':
-      return parseYaml(filePath);
-    default:
-      throw new Error('Format don\'t support');
-  }
-};
-
-export const genDiff = (filePath1, filePath2, style) => {
-  const extFile1 = extname(filePath1).toLowerCase();
-  const extFile2 = extname(filePath2).toLowerCase();
-  const data1 = getDataFromFormat(filePath1, extFile1);
-  const data2 = getDataFromFormat(filePath2, extFile2);
-  const diffTwoObj = getDiffTwoObj(data1, data2);
-  return getStylish(diffTwoObj, style);
-};
+export default getDiffTwoObj;

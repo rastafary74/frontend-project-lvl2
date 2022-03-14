@@ -18,7 +18,6 @@
   },
   "homepage": "https://github.com/rastafary74/frontend-project-lvl2#readme",
   "dependencies": {
-    "@hexlet/code": "file:",
     "commander": "^9.0.0",
     "js-yaml": "^4.1.0",
     "lodash": "^4.17.21"

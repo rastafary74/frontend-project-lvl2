@@ -9,15 +9,9 @@ import {
 } from 'path';
 import { fileURLToPath } from 'url';
 
-import {
-  getDiffTwoObj,
-  getDataFromFormat,
-} from '../../src/gendiff.js';
-
-import {
-  parseJson,
-  parseYaml,
-} from '../../src/parsers.js';
+import getDiffTwoObj from '../../src/buildDiff.js';
+import parse from '../../src/parsers/parsers.js';
+import { getFileContent } from '../../src/index.js';
 
 const simplePatternArray = [
   ['complex', 'common', [
@@ -80,22 +74,15 @@ const fixturesFile1Yaml = getPathToFile('file1.yml');
 const fixturesFile2Yaml = getPathToFile('file2.yml');
 
 test('getDiffTwoObj JSON', () => {
-  const fileContent1Json = parseJson(fixturesFile1Json);
-  const fileContent2Json = parseJson(fixturesFile2Json);
+  const fileContent1Json = parse('json', getFileContent(fixturesFile1Json));
+  const fileContent2Json = parse('json', getFileContent(fixturesFile2Json));
   expect(getDiffTwoObj(fileContent1Json, fileContent2Json)).toEqual(simplePatternArray);
   expect(getDiffTwoObj('', '')).toEqual([]);
 });
 
 test('getDiffTwoObj YAML', () => {
-  const fileContent1Yaml = parseYaml(fixturesFile1Yaml);
-  const fileContent2Yaml = parseYaml(fixturesFile2Yaml);
+  const fileContent1Yaml = parse('yml', getFileContent(fixturesFile1Yaml));
+  const fileContent2Yaml = parse('yml', getFileContent(fixturesFile2Yaml));
   expect(getDiffTwoObj(fileContent1Yaml, fileContent2Yaml)).toEqual(simplePatternArray);
   expect(getDiffTwoObj('', '')).toEqual([]);
-});
-
-test('getDataFromFormat', () => {
-  expect(getDataFromFormat(fixturesFile1Json, '.json')).toEqual(parseJson(fixturesFile1Json));
-  expect(() => {
-    getDataFromFormat(fixturesFile1Json, '.joke');
-  }).toThrow();
 });
