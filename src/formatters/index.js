@@ -9,6 +9,7 @@ const styles = {
 };
 
 export default (style, data) => {
+  console.log(style);
   if (!(style in styles)) {
     throw new Error('Style don\'t support');
   }
