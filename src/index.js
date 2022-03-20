@@ -1,21 +1,10 @@
-import {
-  extname,
-  normalize,
-  resolve,
-} from 'path';
-
-import {
-  readFileSync,
-} from 'fs';
-
+import { extname, resolve } from 'path';
+import { readFileSync } from 'fs';
 import parse from './parsers/parsers.js';
 import setStyle from './formatters/index.js';
 import getDiffTwoObj from './buildDiff.js';
 
-export const getFullPath = (filePath) => {
-  const normalizePath = normalize(filePath);
-  return normalizePath.startsWith('/') ? normalizePath : resolve(normalizePath);
-};
+export const getFullPath = (filePath) => resolve(process.cwd(), filePath);
 
 export const getExtFileFromPath = (filePath) => extname(filePath).toLowerCase().substring(1);
 

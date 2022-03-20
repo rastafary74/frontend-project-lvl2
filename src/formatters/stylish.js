@@ -1,41 +1,39 @@
-const printValue = (value, replacer, spacesCount) => {
+const makeIndent = (depth = 0, marker = '') => {
+  const markerSymbol = 2;
+  const spaceCount = 4;
+  const replacer = ' ';
+  const depthIndent = depth * spaceCount;
+  const indentSize = marker === '' ? depthIndent : depthIndent - markerSymbol;
+  return replacer.repeat(indentSize).concat(marker);
+};
+
+const printValue = (value, depth = 0, localDepth = 0) => {
   if (Array.isArray(value) === false) {
     return String(value);
   }
-  const iter = (node, depth) => {
-    if (Array.isArray(node) === false) {
-      return String(node);
-    }
-    const indentSize = depth * spacesCount;
-    const countSymbol = 2;
-    const startStringSimple = replacer.repeat(indentSize + countSymbol);
-    const startStringComplex = replacer.repeat(indentSize + countSymbol);
-    const bracketIndent = replacer.repeat(indentSize + spacesCount);
-    const [key, oldValue] = node;
-    if (Array.isArray(oldValue) === false) {
-      return `${startStringSimple}  ${key}: ${oldValue}`;
-    }
-    const valueStr = oldValue.map((item) => iter(item, depth + 1)).join('\n');
-    return `${startStringComplex}  ${key}: {\n${valueStr}\n${bracketIndent}}`;
-  };
-  const result = value.map((val) => iter(val, 1)).join('\n');
-  const bracketIndentResult = replacer.repeat(spacesCount);
-  return `{\n${result}\n${bracketIndentResult}}`;
+  const replacerStringSimple = makeIndent(depth);
+  const replacerStringComplex = makeIndent(localDepth);
+  const [key, oldValue] = value;
+  if (Array.isArray(key) === false) {
+    return `${replacerStringSimple}${key}: ${printValue(oldValue, depth)}`;
+  }
+  const valueStr = value.flatMap((item) => printValue(item, depth + 1, localDepth + 1)).join('\n');
+  return `{\n${replacerStringComplex}${valueStr}\n${replacerStringSimple}}`;
 };
 
-const getString = (state, key, oldValue, startString, newValue = null) => {
-  const strokeNewValue = `${key}: ${oldValue}`;
-  const strokeOldValue = `${key}: ${newValue}`;
+const getString = (state, key, oldValue, depth, newValue = null) => {
+  const strokeNewValue = `${key}: ${printValue(newValue, depth)}`;
+  const strokeOldValue = `${key}: ${printValue(oldValue, depth)}`;
   switch (state) {
     case 'added':
-      return `${startString}+ ${strokeNewValue}`;
+      return `${makeIndent(depth, '+ ')}${strokeOldValue}`;
     case 'removed':
-      return `${startString}- ${strokeNewValue}`;
+      return `${makeIndent(depth, '- ')}${strokeOldValue}`;
     case 'unchanged':
-      return `${startString}  ${strokeNewValue}`;
+      return `${makeIndent(depth, '  ')}${strokeOldValue}`;
     case 'updated':
-      return `${startString}- ${strokeNewValue}\n`
-           + `${startString}+ ${strokeOldValue}`;
+      return `${makeIndent(depth, '- ')}${strokeOldValue}\n`
+           + `${makeIndent(depth, '+ ')}${strokeNewValue}`;
     default:
       return `  ${key}: {\n${oldValue}\n`;
   }
@@ -51,13 +49,11 @@ const stylish = (array, replacer = ' ', spacesCount = 4) => {
     const startString = replacer.repeat(indentSize - countSymbol);
     const bracketIndent = replacer.repeat(indentSize);
     const [state, key, oldValue, newValue] = node;
-    const oldValueStr = printValue(oldValue, replacer, indentSize);
-    const newValueStr = printValue(newValue, replacer, indentSize);
     if (state !== 'complex') {
-      return `${getString(state, key, oldValueStr, startString, newValueStr)}`;
+      return `${getString(state, key, oldValue, depth, newValue)}`;
     }
     const valueStr = oldValue.map((item) => iter(item, depth + 1)).join('\n');
-    return `${startString}${getString(state, key, valueStr)}${bracketIndent}}`;
+    return `${startString}${getString(state, key, valueStr, depth)}${bracketIndent}}`;
   };
   const result = array.map((item) => iter(item, 1)).join('\n');
   return `{\n${result}\n}`;

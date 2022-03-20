@@ -1,19 +1,7 @@
-import {
-  test,
-  expect,
-} from '@jest/globals';
-
-import {
-  join,
-  dirname,
-} from 'path';
+import { test, expect } from '@jest/globals';
+import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
-
-import {
-  getExtFileFromPath,
-  getFileContent,
-  genDiff,
-} from '../../src/index.js';
+import { getExtFileFromPath, getFileContent, genDiff } from '../../src/index.js';
 
 const getPathToFile = (filePath) => {
   const fileName = fileURLToPath(import.meta.url);

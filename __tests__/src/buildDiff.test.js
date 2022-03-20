@@ -1,14 +1,6 @@
-import {
-  test,
-  expect,
-} from '@jest/globals';
-
-import {
-  join,
-  dirname,
-} from 'path';
+import { test, expect } from '@jest/globals';
+import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
-
 import getDiffTwoObj from '../../src/buildDiff.js';
 import parse from '../../src/parsers/parsers.js';
 import { getFileContent } from '../../src/index.js';
