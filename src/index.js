@@ -1,8 +1,8 @@
 import { extname, resolve } from 'path';
 import { readFileSync } from 'fs';
 import parse from './parsers/parsers.js';
-import setStyle from './formatters/index.js';
-import getDiffTwoObj from './buildDiff.js';
+import getFormatted from './formatters/index.js';
+import getDiff from './buildDiff.js';
 
 export const getFullPath = (filePath) => resolve(process.cwd(), filePath);
 
@@ -25,6 +25,6 @@ export const genDiff = (filePath1, filePath2, style = 'stylish') => {
   const file2Content = getFileContent(fullFile2Path);
   const file1Data = parse(file1Ext, file1Content);
   const file2Data = parse(file2Ext, file2Content);
-  const diffTwoObj = getDiffTwoObj(file1Data, file2Data);
-  return setStyle(style, diffTwoObj);
+  const diffTwoObj = getDiff(file1Data, file2Data);
+  return getFormatted(style, diffTwoObj);
 };

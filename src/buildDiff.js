@@ -21,13 +21,13 @@ const getSummaryKeys = (obj1, obj2) => {
   return _.sortBy(filteredArray);
 };
 
-const getDiffTwoObj = (dataOne, dataTwo) => {
+const getDiff = (dataOne, dataTwo) => {
   const uniqKeysJsonData = getSummaryKeys(dataOne, dataTwo);
   const calculateDiff = (acc, key) => {
     const dataOneKey = getDataForFormatter(dataOne[key]);
     const dataTwoKey = getDataForFormatter(dataTwo[key]);
     if (dataOne[key] === Object(dataOne[key]) && dataTwo[key] === Object(dataTwo[key])) {
-      return acc.concat([['complex', key, getDiffTwoObj(dataOne[key], dataTwo[key])]]);
+      return acc.concat([['complex', key, getDiff(dataOne[key], dataTwo[key])]]);
     }
     if (key in dataOne && !(key in dataTwo)) {
       return acc.concat([['removed', key, dataOneKey]]);
@@ -43,4 +43,4 @@ const getDiffTwoObj = (dataOne, dataTwo) => {
   return uniqKeysJsonData.reduce(calculateDiff, []);
 };
 
-export default getDiffTwoObj;
+export default getDiff;
