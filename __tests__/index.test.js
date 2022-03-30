@@ -1,7 +1,8 @@
 import { test, expect } from '@jest/globals';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
-import { getFileContent, genDiff } from '../../src/index.js';
+import { readFileSync } from 'fs';
+import { genDiff } from '../src/index.js';
 
 const getPathToFile = (filePath) => {
   const fileName = fileURLToPath(import.meta.url);
@@ -9,12 +10,9 @@ const getPathToFile = (filePath) => {
   return join(dirName, '..', '__fixtures__', filePath);
 };
 
-const resultStylish = getPathToFile('result_stylish.txt');
-const resultPlain = getPathToFile('result_plain.txt');
-const resultJson = getPathToFile('result_json.txt');
-const resultStylishData = getFileContent(resultStylish);
-const resultPlainData = getFileContent(resultPlain);
-const resultJsonData = getFileContent(resultJson);
+const resultStylishData = readFileSync(getPathToFile('result_stylish.txt'), 'utf8');
+const resultPlainData = readFileSync(getPathToFile('result_plain.txt'), 'utf8');
+const resultJsonData = readFileSync(getPathToFile('result_json.txt'), 'utf8');
 const extForTest = ['yml', 'json'];
 
 test.each(extForTest)('.add(%s)', (ext) => {
