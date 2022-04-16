@@ -8,7 +8,7 @@ const parsers = {
 
 export default (format, data) => {
   if (!(format in parsers)) {
-    throw new Error('Format don\'t support');
+    throw new Error(`Format ${format} don't support`);
   }
   return parsers[format](data);
 };

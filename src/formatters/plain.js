@@ -8,7 +8,7 @@ const getValue = (value) => {
   return value;
 };
 
-const getString = (state, property, oldVal, newVal) => {
+const getDiffStringForProperty = (state, property, oldVal, newVal) => {
   switch (state) {
     case 'added':
       return [`Property '${property}' was added with value: ${oldVal}`];
@@ -34,7 +34,7 @@ const getPlain = (array, acc = []) => {
     if (state === 'complex') {
       return getPlain(oldVal, path);
     }
-    return getString(state, pathStr, printOldVal, printNewVal);
+    return getDiffStringForProperty(state, pathStr, printOldVal, printNewVal);
   };
   return array.map((arr) => iter(arr, acc))
     .filter((item) => item.length !== 0)

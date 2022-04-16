@@ -26,13 +26,13 @@ const getDiff = (dataOne, dataTwo) => {
   const calculateDiff = (acc, key) => {
     const dataOneKey = getDataForFormatter(dataOne[key]);
     const dataTwoKey = getDataForFormatter(dataTwo[key]);
-    if (dataOne[key] === Object(dataOne[key]) && dataTwo[key] === Object(dataTwo[key])) {
+    if (_.isPlainObject(dataOne[key]) && _.isPlainObject(dataTwo[key])) {
       return acc.concat([['complex', key, getDiff(dataOne[key], dataTwo[key])]]);
     }
-    if (key in dataOne && !(key in dataTwo)) {
+    if (!(key in dataTwo)) {
       return acc.concat([['removed', key, dataOneKey]]);
     }
-    if (!(key in dataOne) && key in dataTwo) {
+    if (!(key in dataOne)) {
       return acc.concat([['added', key, dataTwoKey]]);
     }
     if (dataOne[key] !== dataTwo[key]) {
