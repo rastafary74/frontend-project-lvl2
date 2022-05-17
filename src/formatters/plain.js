@@ -5,7 +5,7 @@ const getValue = (value) => {
   if (typeof value === 'string') {
     return `'${value}'`;
   }
-  return value;
+  return `${value}`;
 };
 
 const getDiffStringForProperty = (state, property, oldVal, newVal) => {
@@ -26,7 +26,7 @@ const getPlain = (array, acc = []) => {
     return array;
   }
   const iter = (arr, accIter) => {
-    const [state, key, oldVal, newVal] = arr;
+    const [state, key, oldVal, newVal = null] = arr;
     const path = accIter.concat(key);
     const pathStr = path.join('.');
     const printOldVal = getValue(oldVal);

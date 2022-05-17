@@ -13,9 +13,9 @@ const printValue = (value, depth = 0, localDepth = 0) => {
   }
   const replacerStringSimple = makeIndent(depth);
   const replacerStringComplex = makeIndent(localDepth);
-  const [key, oldValue] = value;
-  if (Array.isArray(key) === false) {
-    return `${replacerStringSimple}${key}: ${printValue(oldValue, depth)}`;
+  const [firstValue, secondValue] = value;
+  if (Array.isArray(firstValue) === false) {
+    return `${replacerStringSimple}${firstValue}: ${printValue(secondValue, depth)}`;
   }
   const valueStr = value.flatMap((item) => printValue(item, depth + 1, localDepth + 1)).join('\n');
   return `{\n${replacerStringComplex}${valueStr}\n${replacerStringSimple}}`;

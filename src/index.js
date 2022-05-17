@@ -8,13 +8,7 @@ export const getFullPath = (filePath) => resolve(process.cwd(), filePath);
 
 export const getExtFileFromPath = (filePath) => extname(filePath).toLowerCase().substring(1);
 
-export const getFileContent = (fullPath) => {
-  try {
-    return readFileSync(fullPath, 'utf8');
-  } catch (err) {
-    throw new Error('File not found');
-  }
-};
+export const getFileContent = (fullPath) => readFileSync(fullPath, 'utf8');
 
 export const genDiff = (filePath1, filePath2, style = 'stylish') => {
   const fullFile1Path = getFullPath(filePath1);

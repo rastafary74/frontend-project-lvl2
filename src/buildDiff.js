@@ -15,10 +15,8 @@ const getDataForFormatter = (object) => {
 };
 
 const getSummaryKeys = (obj1, obj2) => {
-  const keysData = Object.keys(obj1).concat(Object.keys(obj2));
-  const sortedArray = (element, index, array) => array.indexOf(element) === index;
-  const filteredArray = keysData.filter(sortedArray);
-  return _.sortBy(filteredArray);
+  const keys = _.union(Object.keys(obj1), Object.keys(obj2));
+  return _.sortBy(keys);
 };
 
 const getDiff = (dataOne, dataTwo) => {
